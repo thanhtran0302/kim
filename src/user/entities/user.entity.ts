@@ -1,8 +1,11 @@
+import { AdEntity } from 'src/ad/entities/ad.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -114,4 +117,8 @@ export class UserEntity {
 
   @Column({ type: 'int', nullable: true })
   weight?: number;
+
+  @OneToMany(() => AdEntity, (ad) => ad.user)
+  @JoinColumn()
+  ads: AdEntity[];
 }

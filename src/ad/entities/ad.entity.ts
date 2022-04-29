@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from 'src/user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export enum AdPaymentOptions {
   CASH = 'cash',
@@ -48,8 +55,18 @@ export class AdEntity {
   publishedDate: string;
 
   @Column({ type: 'timestamp', nullable: true, name: 'expired_date' })
-  expired_date: string;
+  expiredDate: string;
 
-  @Column({ type: 'enum', array: true, default: [AdPaymentOptions.CASH] })
+  @Column({
+    type: 'enum',
+    enum: AdPaymentOptions,
+    array: true,
+    default: [AdPaymentOptions.CASH],
+    name: 'payment_options',
+  })
   paymentOptions: AdPaymentOptions[];
+
+  @ManyToOne(() => UserEntity, (user) => user.ads)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
 }

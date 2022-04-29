@@ -6,6 +6,7 @@ import { UserEntity } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { AdModule } from './ad/ad.module';
 import { PhotoModule } from './photo/photo.module';
+import { AdEntity } from './ad/entities/ad.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { PhotoModule } from './photo/photo.module';
       username: 'thanhtran',
       password: 'thanhtran',
       synchronize: true,
-      entities: [UserEntity],
+      entities: [UserEntity, AdEntity],
       migrations: ['dist/src/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
