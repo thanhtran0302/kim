@@ -12,12 +12,17 @@ export class UserService {
     private _userRepository: Repository<UserEntity>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const userObject = {
-      ...createUserDto,
-      password: '123',
+  async create(createUserDto: CreateUserDto) {
+    const { id, birthday, email, firstname, lastname } =
+      await this._userRepository.save<Partial<UserEntity>>(createUserDto);
+
+    return {
+      id,
+      birthday,
+      email,
+      firstname,
+      lastname,
     };
-    return this._userRepository.save(userObject);
   }
 
   findAll() {
