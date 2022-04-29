@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserEntity } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { AdModule } from './ad/ad.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
       migrationsTableName: 'migrations',
     }),
     UserModule,
+    AdModule,
   ],
   controllers: [AppController],
   providers: [AppService],

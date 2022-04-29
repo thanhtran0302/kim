@@ -18,6 +18,15 @@ export enum UserSex {
   OTHER = 'OTHER',
 }
 
+export enum UserEyesColor {
+  BLUE = 'blue',
+  GREEN = 'green',
+  GREY = 'grey',
+  BROWN = 'brown',
+  BLACK = 'black',
+  HAZEL = 'hazel',
+}
+
 @Entity({ name: 'user' })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -78,4 +87,18 @@ export class UserEntity {
     nullable: true,
   })
   sex: UserSex;
+
+  @Column({
+    type: 'enum',
+    enum: UserEyesColor,
+    name: 'eyes_color',
+    nullable: true,
+  })
+  eyesColor?: UserEyesColor;
+
+  @Column({ type: 'int', nullable: true })
+  height?: number;
+
+  @Column({ type: 'int', nullable: true })
+  weight?: number;
 }
