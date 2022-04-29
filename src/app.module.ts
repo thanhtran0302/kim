@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UserEntity } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { AdModule } from './ad/ad.module';
+import { PhotoModule } from './photo/photo.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AdModule } from './ad/ad.module';
     }),
     UserModule,
     AdModule,
+    PhotoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
