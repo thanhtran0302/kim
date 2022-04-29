@@ -27,6 +27,11 @@ export enum UserEyesColor {
   HAZEL = 'hazel',
 }
 
+export enum UserType {
+  PROFESSIONAL = 'professional',
+  CLIENT = 'client',
+}
+
 @Entity({ name: 'user' })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -87,6 +92,14 @@ export class UserEntity {
     nullable: true,
   })
   sex: UserSex;
+
+  @Column({
+    type: 'enum',
+    enum: UserType,
+    name: 'user_type',
+    default: null,
+  })
+  userType: UserType;
 
   @Column({
     type: 'enum',
