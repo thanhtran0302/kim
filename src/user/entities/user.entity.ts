@@ -100,7 +100,7 @@ export class UserEntity {
     type: 'enum',
     enum: UserType,
     name: 'user_type',
-    default: null,
+    default: UserType.PROFESSIONAL,
   })
   userType: UserType;
 
