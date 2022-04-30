@@ -44,14 +44,7 @@ export class UserService {
       where: {
         email,
       },
-      select: {
-        password: true,
-        id: true,
-        role: true,
-        email: true,
-        firstname: true,
-        lastname: true,
-      },
+      select: ['id', 'role', 'email', 'firstname', 'lastname', 'password'],
     });
   }
 

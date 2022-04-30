@@ -9,7 +9,7 @@ import {
 
 export enum AdPaymentOptions {
   CASH = 'CASH',
-  CREDIT_CARD = 'CREDIT_CAR',
+  CREDIT_CARD = 'CREDIT_CARD',
   PAYPAL = 'PAYPAL',
 }
 
@@ -36,8 +36,8 @@ export class AdEntity {
   @Column()
   street!: string;
 
-  @Column({ name: 'post_code' })
-  postCode!: string;
+  @Column({ name: 'postal_code' })
+  postalCode!: string;
 
   @Column()
   city!: string;
@@ -45,8 +45,11 @@ export class AdEntity {
   @Column()
   country!: string;
 
-  @Column()
-  website!: string;
+  @Column({ name: 'business_phone_number' })
+  businessPhoneNumber!: string;
+
+  @Column({ nullable: true })
+  website: string;
 
   @Column({ type: 'float', nullable: true })
   latitude: number;
@@ -58,7 +61,7 @@ export class AdEntity {
     type: 'enum',
     name: 'publish_state',
     enum: AdPublish,
-    default: AdPublish.NON_PUBLISHED,
+    default: AdPublish.VALIDATING,
   })
   publishState: AdPublish;
 
