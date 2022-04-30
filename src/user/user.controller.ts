@@ -7,12 +7,13 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
-  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/auth/passportStrategy/jwt-auth.guard';
+import { Request } from 'express';
+import { UserEntity } from './entities/user.entity';
 
 @Controller('user')
 export class UserController {
@@ -28,15 +29,16 @@ export class UserController {
     return this._userService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this._userService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this._userService.update(+id, updateUserDto);
+  @Patch()
+  update(@Body() updateUserDto: UpdateUserDto, @Req() req: Request) {
+    const { id } = req.user as Partial<UserEntity>;
+
+    return this._userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
