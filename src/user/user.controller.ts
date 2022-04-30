@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from 'src/auth/passportStrategy/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -26,6 +28,7 @@ export class UserController {
     return this._userService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this._userService.findOne(id);
