@@ -8,9 +8,15 @@ import {
 } from 'typeorm';
 
 export enum AdPaymentOptions {
-  CASH = 'cash',
-  CREDIT_CARD = 'credit_card',
-  PAYPAL = 'paypal',
+  CASH,
+  CREDIT_CARD,
+  PAYPAL,
+}
+
+export enum AdPublish {
+  NON_PUBLISHED,
+  VALIDATING,
+  PUBLISHED,
 }
 
 @Entity({ name: 'ad' })
@@ -48,8 +54,13 @@ export class AdEntity {
   @Column({ type: 'float', nullable: true })
   longitude: number;
 
-  @Column({ type: 'boolean', default: false, name: 'is_published' })
-  isPublished: boolean;
+  @Column({
+    type: 'enum',
+    name: 'publish_state',
+    enum: AdPublish,
+    default: AdPublish.NON_PUBLISHED,
+  })
+  publishState: AdPublish;
 
   @Column({ type: 'timestamp', nullable: true, name: 'published_date' })
   publishedDate: string;

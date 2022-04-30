@@ -11,28 +11,28 @@ import {
 } from 'typeorm';
 
 export enum UserRole {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
+  ADMIN,
+  USER,
 }
 
 export enum UserSex {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-  OTHER = 'OTHER',
+  MALE,
+  FEMALE,
+  OTHER,
 }
 
 export enum UserEyesColor {
-  BLUE = 'blue',
-  GREEN = 'green',
-  GREY = 'grey',
-  BROWN = 'brown',
-  BLACK = 'black',
-  HAZEL = 'hazel',
+  BLUE,
+  GREEN,
+  GREY,
+  BROWN,
+  BLACK,
+  HAZEL,
 }
 
 export enum UserType {
-  PROFESSIONAL = 'professional',
-  CLIENT = 'client',
+  PROFESSIONAL,
+  CLIENT,
 }
 
 @Entity({ name: 'user' })
