@@ -8,15 +8,15 @@ import {
 } from 'typeorm';
 
 export enum AdPaymentOptions {
-  CASH,
-  CREDIT_CARD,
-  PAYPAL,
+  CASH = 'CASH',
+  CREDIT_CARD = 'CREDIT_CAR',
+  PAYPAL = 'PAYPAL',
 }
 
 export enum AdPublish {
-  NON_PUBLISHED,
-  VALIDATING,
-  PUBLISHED,
+  NON_PUBLISHED = 'NON_PUBLISHED',
+  VALIDATING = 'VALIDATING',
+  PUBLISHED = 'PUBLISHED',
 }
 
 @Entity({ name: 'ad' })

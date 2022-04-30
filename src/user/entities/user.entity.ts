@@ -11,28 +11,37 @@ import {
 } from 'typeorm';
 
 export enum UserRole {
-  ADMIN,
-  USER,
+  ADMIN = 'ADMIN',
+  USER = 'USER',
 }
 
 export enum UserSex {
-  MALE,
-  FEMALE,
-  OTHER,
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER',
 }
 
 export enum UserEyesColor {
-  BLUE,
-  GREEN,
-  GREY,
-  BROWN,
-  BLACK,
-  HAZEL,
+  BLUE = 'BLUE',
+  GREEN = 'GREEN',
+  GREY = 'GREY',
+  BROWN = 'BROWN',
+  BLACK = 'BLACK',
+  HAZEL = 'HAZEL',
 }
 
 export enum UserType {
-  PROFESSIONAL,
-  CLIENT,
+  PROFESSIONAL = 'PROFESSIONAL',
+  CLIENT = 'CLIENT',
+}
+
+export enum UserEthnicity {
+  ASIAN = 'ASIAN',
+  LATINO_AMERICAN = 'LATINO_AMERICAN',
+  NORTH_AMERICAN = 'NORTH_AMERICAN',
+  NORTH_AFRICAN = 'NORTH_AFRICAN',
+  SUBSAHARAN_AFRICAN = 'SUBSAHARAN_AFRICAN',
+  CAUCASIAN = 'CAUCASIAN',
 }
 
 @Entity({ name: 'user' })
@@ -95,6 +104,9 @@ export class UserEntity {
     nullable: true,
   })
   sex: UserSex;
+
+  @Column({ type: 'enum', enum: UserEthnicity, nullable: true })
+  ethnicity: UserEthnicity;
 
   @Column({
     type: 'enum',
