@@ -1,14 +1,13 @@
-import { AdPaymentOptions } from '../entities/ad.entity';
+import { OmitType } from '@nestjs/mapped-types';
+import { AdEntity } from '../entities/ad.entity';
 
-export class CreateAdDto {
-  title: string;
-  description: string;
-  streetNumber: string;
-  street: string;
-  postalCode: string;
-  city: string;
-  country: string;
-  website: string;
-  paymentOptions: AdPaymentOptions[];
-  businessPhoneNumber: string;
-}
+export class CreateAdDto extends OmitType(AdEntity, [
+  'adId',
+  'id',
+  'expiredDate',
+  'latitude',
+  'longitude',
+  'publishState',
+  'publishedDate',
+  'user',
+]) {}

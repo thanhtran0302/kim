@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { nanoid, customAlphabet } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 
 import { CreateAdDto } from './dto/create-ad.dto';
 import { UpdateAdDto } from './dto/update-ad.dto';
@@ -14,7 +14,8 @@ export class AdService {
   ) {}
 
   async create(createAdDto: CreateAdDto, userId: string) {
-    const customNanoId = customAlphabet('12346789ABCDEFGHJKLMNPQRTUVWXY')
+    const customNanoId = customAlphabet('12346789ABCDEFGHJKLMNPQRTUVWXY');
+
     return this._adRepositorry
       .createQueryBuilder()
       .insert()
@@ -22,13 +23,9 @@ export class AdService {
       .values({
         ...createAdDto,
         adId: `RXM-${customNanoId(8).toUpperCase()}`,
-        user: { id: userId }
+        user: { id: userId },
       })
       .execute();
-  }
-
-  existingAd(userId: string) {
-    return this._adRepositorry.findBy({ user: { id: userId } });
   }
 
   findAll() {
@@ -39,8 +36,18 @@ export class AdService {
     return `This action returns a #${id} ad`;
   }
 
-  update(id: number, updateAdDto: UpdateAdDto) {
-    return `This action updates a #${id} ad`;
+  update(id: string, updateAdDto: UpdateAdDto, userId: string) {
+    return this._adRepositorry.update(
+      {
+        id,
+        user: {
+          id: userId,
+        },
+      },
+      {
+        ...updateAdDto,
+      },
+    );
   }
 
   remove(id: number) {

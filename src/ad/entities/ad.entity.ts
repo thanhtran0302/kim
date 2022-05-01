@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-
 export enum AdPaymentOptions {
   CASH = 'CASH',
   CREDIT_CARD = 'CREDIT_CARD',

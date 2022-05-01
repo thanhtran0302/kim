@@ -35,8 +35,13 @@ export class AdController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdDto: UpdateAdDto) {
-    return this._adService.update(+id, updateAdDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateAdDto: UpdateAdDto,
+    @Req() req: Request,
+  ) {
+    const { id: userId } = req.user as Partial<UserEntity>;
+    return this._adService.update(id, updateAdDto, userId);
   }
 
   @Delete(':id')
