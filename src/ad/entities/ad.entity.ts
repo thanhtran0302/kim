@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+
 export enum AdPaymentOptions {
   CASH = 'CASH',
   CREDIT_CARD = 'CREDIT_CARD',
@@ -23,6 +24,9 @@ export enum AdPublish {
 export class AdEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
+
+  @Column({ name: 'ad_id' })
+  adId: string;
 
   @Column()
   title!: string;
