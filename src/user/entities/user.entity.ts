@@ -64,9 +64,6 @@ export class UserEntity {
   @Column({ type: 'timestamp', nullable: false })
   birthday!: string;
 
-  @Column({ type: 'text', nullable: true })
-  description?: string;
-
   @CreateDateColumn({
     type: 'timestamp',
     name: 'created_at',
@@ -105,9 +102,6 @@ export class UserEntity {
   })
   sex: UserSex;
 
-  @Column({ type: 'enum', enum: UserEthnicity, nullable: true })
-  ethnicity: UserEthnicity;
-
   @Column({
     type: 'enum',
     enum: UserType,
@@ -115,20 +109,6 @@ export class UserEntity {
     default: UserType.PROFESSIONAL,
   })
   userType: UserType;
-
-  @Column({
-    type: 'enum',
-    enum: UserEyesColor,
-    name: 'eyes_color',
-    nullable: true,
-  })
-  eyesColor?: UserEyesColor;
-
-  @Column({ type: 'int', nullable: true })
-  height?: number;
-
-  @Column({ type: 'int', nullable: true })
-  weight?: number;
 
   @OneToMany(() => AdEntity, (ad) => ad.user)
   @JoinColumn()
