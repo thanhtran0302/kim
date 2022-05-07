@@ -1,3 +1,4 @@
+import { BusinessOpeningEntity } from 'src/business-opening/entities/business-opening.entity';
 import { MassageEntity } from 'src/massage/entities/massage.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
@@ -91,4 +92,10 @@ export class AdEntity {
 
   @OneToMany(() => MassageEntity, (massage) => massage.id)
   massages: MassageEntity[];
+
+  @OneToMany(
+    () => BusinessOpeningEntity,
+    (businessOpening) => businessOpening.id,
+  )
+  businessOpening: BusinessOpeningEntity[];
 }
