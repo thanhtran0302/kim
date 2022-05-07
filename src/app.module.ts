@@ -10,6 +10,9 @@ import { AdEntity } from './ad/entities/ad.entity';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/passportStrategy/jwt-auth.guard';
+import { ProfileModule } from './profile/profile.module';
+import { ProfileEntity } from './profile/entities/profile.entity';
+import { PhotoEntity } from './photo/entities/photo.entity';
 
 @Module({
   imports: [
@@ -21,7 +24,7 @@ import { JwtAuthGuard } from './auth/passportStrategy/jwt-auth.guard';
       username: 'thanhtran',
       password: 'thanhtran',
       synchronize: true,
-      entities: [UserEntity, AdEntity],
+      entities: [UserEntity, AdEntity, ProfileEntity, PhotoEntity],
       migrations: ['dist/src/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
@@ -29,6 +32,7 @@ import { JwtAuthGuard } from './auth/passportStrategy/jwt-auth.guard';
     AdModule,
     PhotoModule,
     AuthModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [

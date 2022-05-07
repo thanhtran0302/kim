@@ -21,27 +21,9 @@ export enum UserSex {
   OTHER = 'OTHER',
 }
 
-export enum UserEyesColor {
-  BLUE = 'BLUE',
-  GREEN = 'GREEN',
-  GREY = 'GREY',
-  BROWN = 'BROWN',
-  BLACK = 'BLACK',
-  HAZEL = 'HAZEL',
-}
-
 export enum UserType {
   PROFESSIONAL = 'PROFESSIONAL',
   CLIENT = 'CLIENT',
-}
-
-export enum UserEthnicity {
-  ASIAN = 'ASIAN',
-  LATINO_AMERICAN = 'LATINO_AMERICAN',
-  NORTH_AMERICAN = 'NORTH_AMERICAN',
-  NORTH_AFRICAN = 'NORTH_AFRICAN',
-  SUBSAHARAN_AFRICAN = 'SUBSAHARAN_AFRICAN',
-  CAUCASIAN = 'CAUCASIAN',
 }
 
 @Entity({ name: 'user' })
