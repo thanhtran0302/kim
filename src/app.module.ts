@@ -13,6 +13,8 @@ import { JwtAuthGuard } from './auth/passportStrategy/jwt-auth.guard';
 import { ProfileModule } from './profile/profile.module';
 import { ProfileEntity } from './profile/entities/profile.entity';
 import { PhotoEntity } from './photo/entities/photo.entity';
+import { MassageModule } from './massage/massage.module';
+import { MassageEntity } from './massage/entities/massage.entity';
 
 @Module({
   imports: [
@@ -24,7 +26,13 @@ import { PhotoEntity } from './photo/entities/photo.entity';
       username: 'thanhtran',
       password: 'thanhtran',
       synchronize: true,
-      entities: [UserEntity, AdEntity, ProfileEntity, PhotoEntity],
+      entities: [
+        UserEntity,
+        AdEntity,
+        ProfileEntity,
+        PhotoEntity,
+        MassageEntity,
+      ],
       migrations: ['dist/src/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
@@ -33,6 +41,7 @@ import { PhotoEntity } from './photo/entities/photo.entity';
     PhotoModule,
     AuthModule,
     ProfileModule,
+    MassageModule,
   ],
   controllers: [AppController],
   providers: [

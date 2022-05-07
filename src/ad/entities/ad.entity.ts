@@ -1,9 +1,11 @@
+import { MassageEntity } from 'src/massage/entities/massage.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -86,4 +88,7 @@ export class AdEntity {
   @ManyToOne(() => UserEntity, (user) => user.ads)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+
+  @OneToMany(() => MassageEntity, (massage) => massage.id)
+  massages: MassageEntity[];
 }

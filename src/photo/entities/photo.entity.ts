@@ -18,7 +18,7 @@ export class PhotoEntity {
   @Column({ name: 'file_name' })
   fileName: string;
 
-  @ManyToMany(() => ProfileEntity, (profile) => profile.photos)
+  @ManyToMany(() => ProfileEntity, (profile) => profile.id)
   @JoinTable({
     name: 'profile_photos',
     joinColumn: {

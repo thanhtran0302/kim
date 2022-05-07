@@ -144,7 +144,7 @@ export class ProfileEntity {
   @Column({ type: 'enum', enum: ProfileHairSize, name: 'hair_size' })
   hairSize!: ProfileHairSize;
 
-  @ManyToMany(() => PhotoEntity, (photo) => photo.profile)
+  @ManyToMany(() => PhotoEntity, (photo) => photo.id)
   @JoinTable({
     name: 'profile_photos',
     joinColumn: {
