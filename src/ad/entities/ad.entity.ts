@@ -91,15 +91,16 @@ export class AdEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @OneToMany(() => MassageEntity, (massage) => massage.id)
+  @OneToMany(() => MassageEntity, (massage) => massage.id, { nullable: true })
   massages: MassageEntity[];
 
   @OneToMany(
     () => BusinessOpeningEntity,
     (businessOpening) => businessOpening.id,
+    { nullable: true },
   )
   businessOpening: BusinessOpeningEntity[];
 
-  @OneToMany(() => ReviewEntity, (review) => review.id)
+  @OneToMany(() => ReviewEntity, (review) => review.id, { nullable: true })
   review: ReviewEntity;
 }

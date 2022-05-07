@@ -29,11 +29,11 @@ export class AdService {
   }
 
   findAll() {
-    return `This action returns all ad`;
+    return this._adRepositorry.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ad`;
+  findOne(id: string) {
+    return this._adRepositorry.findOneBy({ id });
   }
 
   update(id: string, updateAdDto: UpdateAdDto, userId: string) {
@@ -50,7 +50,7 @@ export class AdService {
     );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ad`;
+  remove(id: string) {
+    return this._adRepositorry.delete({ id });
   }
 }

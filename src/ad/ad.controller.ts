@@ -21,6 +21,7 @@ export class AdController {
   @Post()
   async create(@Body() createAdDto: CreateAdDto, @Req() req: Request) {
     const { id } = req.user as UserEntity;
+
     return this._adService.create(createAdDto, id);
   }
 
@@ -31,7 +32,7 @@ export class AdController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this._adService.findOne(+id);
+    return this._adService.findOne(id);
   }
 
   @Patch(':id')
@@ -46,6 +47,6 @@ export class AdController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this._adService.remove(+id);
+    return this._adService.remove(id);
   }
 }
