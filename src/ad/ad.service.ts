@@ -22,7 +22,7 @@ export class AdService {
       .into(AdEntity)
       .values({
         ...createAdDto,
-        adId: `RXM-${customNanoId(8).toUpperCase()}`,
+        adShortId: `RXM-${customNanoId(8).toUpperCase()}`,
         user: { id: userId },
       })
       .execute();

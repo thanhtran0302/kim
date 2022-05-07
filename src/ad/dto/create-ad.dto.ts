@@ -2,7 +2,7 @@ import { OmitType } from '@nestjs/mapped-types';
 import { AdEntity } from '../entities/ad.entity';
 
 export class CreateAdDto extends OmitType(AdEntity, [
-  'adId',
+  'adShortId',
   'id',
   'expiredDate',
   'latitude',

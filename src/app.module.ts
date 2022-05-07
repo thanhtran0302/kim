@@ -17,6 +17,8 @@ import { MassageModule } from './massage/massage.module';
 import { MassageEntity } from './massage/entities/massage.entity';
 import { BusinessOpeningModule } from './business-opening/business-opening.module';
 import { BusinessOpeningEntity } from './business-opening/entities/business-opening.entity';
+import { ReviewModule } from './review/review.module';
+import { ReviewEntity } from './review/entities/review.entity';
 
 @Module({
   imports: [
@@ -35,6 +37,7 @@ import { BusinessOpeningEntity } from './business-opening/entities/business-open
         PhotoEntity,
         MassageEntity,
         BusinessOpeningEntity,
+        ReviewEntity,
       ],
       migrations: ['dist/src/migrations/*.js'],
       migrationsTableName: 'migrations',
@@ -46,6 +49,7 @@ import { BusinessOpeningEntity } from './business-opening/entities/business-open
     ProfileModule,
     MassageModule,
     BusinessOpeningModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [

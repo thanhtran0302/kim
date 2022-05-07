@@ -1,5 +1,6 @@
 import { BusinessOpeningEntity } from 'src/business-opening/entities/business-opening.entity';
 import { MassageEntity } from 'src/massage/entities/massage.entity';
+import { ReviewEntity } from 'src/review/entities/review.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -27,8 +28,8 @@ export class AdEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ name: 'ad_id' })
-  adId: string;
+  @Column({ name: 'ad_short_id' })
+  adShortId: string;
 
   @Column()
   title!: string;
@@ -98,4 +99,7 @@ export class AdEntity {
     (businessOpening) => businessOpening.id,
   )
   businessOpening: BusinessOpeningEntity[];
+
+  @OneToMany(() => ReviewEntity, (review) => review.id)
+  review: ReviewEntity;
 }
