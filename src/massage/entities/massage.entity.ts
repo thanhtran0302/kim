@@ -24,7 +24,7 @@ export class MassageEntity {
   @Column()
   duration: number;
 
-  @Column({ name: 'price_discount' })
+  @Column({ name: 'price_discount', nullable: true })
   priceDiscount: number;
 
   @ManyToOne(() => AdEntity, (ad) => ad.id)

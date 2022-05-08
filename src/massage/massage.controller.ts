@@ -27,16 +27,16 @@ export class MassageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.massageService.findOne(+id);
+    return this.massageService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMassageDto: UpdateMassageDto) {
-    return this.massageService.update(+id, updateMassageDto);
+    return this.massageService.update(id, updateMassageDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.massageService.remove(+id);
+    return this.massageService.remove(id);
   }
 }

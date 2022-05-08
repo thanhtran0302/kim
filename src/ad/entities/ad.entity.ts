@@ -92,7 +92,7 @@ export class AdEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @OneToMany(() => MassageEntity, (massage) => massage.id, { nullable: true })
+  @OneToMany(() => MassageEntity, (massage) => massage.ad, { nullable: true })
   massages: MassageEntity[];
 
   @OneToMany(
