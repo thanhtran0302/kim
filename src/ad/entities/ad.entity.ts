@@ -1,5 +1,6 @@
 import { BusinessOpeningEntity } from 'src/business-opening/entities/business-opening.entity';
 import { MassageEntity } from 'src/massage/entities/massage.entity';
+import { ProfileEntity } from 'src/profile/entities/profile.entity';
 import { ReviewEntity } from 'src/review/entities/review.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
@@ -103,4 +104,7 @@ export class AdEntity {
 
   @OneToMany(() => ReviewEntity, (review) => review.id, { nullable: true })
   review: ReviewEntity;
+
+  @OneToMany(() => ProfileEntity, (profile) => profile.ad, { nullable: true })
+  profiles: ProfileEntity[];
 }

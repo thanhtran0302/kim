@@ -1,16 +1,19 @@
+import { AdEntity } from 'src/ad/entities/ad.entity';
 import { PhotoEntity } from 'src/photo/entities/photo.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-enum ProfileEyesColor {
+export enum ProfileEyesColor {
   BLUE = 'BLUE',
   GREEN = 'GREEN',
   GREY = 'GREY',
@@ -19,7 +22,7 @@ enum ProfileEyesColor {
   HAZEL = 'HAZEL',
 }
 
-enum ProfileEthnicity {
+export enum ProfileEthnicity {
   ASIAN = 'ASIAN',
   LATINO_AMERICAN = 'LATINO_AMERICAN',
   NORTH_AMERICAN = 'NORTH_AMERICAN',
@@ -28,13 +31,13 @@ enum ProfileEthnicity {
   CAUCASIAN = 'CAUCASIAN',
 }
 
-enum ProfileClientType {
+export enum ProfileClientType {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   COUPLE = 'COUPLE',
 }
 
-enum ProfileSilhouette {
+export enum ProfileSilhouette {
   VERY_SLIM = 'VERY_SLIM',
   SLIM = 'SLIM',
   NORMAL = 'NORMAL',
@@ -43,14 +46,14 @@ enum ProfileSilhouette {
   VERY_PLUMP = 'VERY_PLUMP',
 }
 
-enum ProfileHairColor {
+export enum ProfileHairColor {
   BLACK = 'BLACK',
   BROWN = 'BROWN',
   BLOND = 'BLOND',
   RED = 'RED',
 }
 
-enum ProfileHairSize {
+export enum ProfileHairSize {
   SHAVED = 'SHAVED',
   SHORT = 'SHORT',
   MEDIUM_SHORT = 'MEDIUM_SHORT',
@@ -110,7 +113,7 @@ export class ProfileEntity {
   clientTypes!: ProfileClientType[];
 
   @Column({ type: 'enum', enum: ProfileEthnicity, nullable: false })
-  ethnicity!: ProfileEntity;
+  ethnicity!: ProfileEthnicity;
 
   @Column({
     type: 'enum',
@@ -118,7 +121,7 @@ export class ProfileEntity {
     nullable: false,
     name: 'eyes_color',
   })
-  eyes_color!: ProfileEyesColor;
+  eyesColor!: ProfileEyesColor;
 
   @Column({ type: 'int', nullable: false })
   height!: number;
@@ -144,7 +147,11 @@ export class ProfileEntity {
   @Column({ type: 'enum', enum: ProfileHairSize, name: 'hair_size' })
   hairSize!: ProfileHairSize;
 
-  @ManyToMany(() => PhotoEntity, (photo) => photo.id)
+  @ManyToOne(() => AdEntity, (ad) => ad.id, { nullable: false })
+  @JoinColumn({ name: 'ad_id' })
+  ad: AdEntity;
+
+  @ManyToMany(() => PhotoEntity, (photo) => photo.id, { nullable: true })
   @JoinTable({
     name: 'profile_photos',
     joinColumn: {
