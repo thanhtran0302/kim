@@ -27,7 +27,7 @@ export class ReviewEntity {
   @Column({ name: 'value_for_money' })
   valueForMoney!: number;
 
-  @Column()
+  @Column({ type: 'float' })
   overrall: number;
 
   @ManyToOne(() => AdEntity, (ad) => ad.id)
