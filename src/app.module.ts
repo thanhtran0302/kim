@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserEntity } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { AdModule } from './ad/ad.module';
+import { AdEntity } from './ad/entities/ad.entity';
 
 @Module({
   imports: [
@@ -26,11 +28,12 @@ import { UserModule } from './user/user.module';
       username: 'thanhtran',
       password: 'thanhtran',
       synchronize: true,
-      entities: [UserEntity],
+      entities: [UserEntity, AdEntity],
       migrations: ['dist/src/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
     UserModule,
+    AdModule,
   ],
   controllers: [AppController],
   providers: [AppService],

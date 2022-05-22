@@ -14,7 +14,7 @@ registerEnumType(UserSex, {
 });
 
 @ObjectType()
-export class User {
+export class UserModel {
   @Field(() => ID)
   id: string;
 

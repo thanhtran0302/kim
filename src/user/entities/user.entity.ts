@@ -1,8 +1,11 @@
+import { AdEntity } from 'src/ad/entities/ad.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -88,4 +91,8 @@ export class UserEntity {
     default: UserType.PROFESSIONAL,
   })
   type: UserType;
+
+  @OneToMany(() => AdEntity, (ad) => ad.user)
+  @JoinColumn()
+  ads: AdEntity[];
 }
