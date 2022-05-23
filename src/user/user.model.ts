@@ -27,8 +27,8 @@ export class UserModel {
   @Field(() => String)
   lastname: string;
 
-  @Field(() => String)
-  birthday: string;
+  @Field(() => Date)
+  birthday: Date;
 
   @Field(() => String)
   createdAt: string;

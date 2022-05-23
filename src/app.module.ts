@@ -19,6 +19,9 @@ import { AdEntity } from './ad/entities/ad.entity';
       autoSchemaFile: true,
       sortSchema: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      buildSchemaOptions: {
+        dateScalarMode: 'isoDate',
+      },
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
