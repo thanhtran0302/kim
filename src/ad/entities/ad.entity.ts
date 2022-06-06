@@ -1,8 +1,10 @@
+import { ProfileEntity } from 'src/profile/entities/profile.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -86,4 +88,7 @@ export class AdEntity {
   @ManyToOne(() => UserEntity, (user) => user.ads)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+
+  @ManyToMany(() => ProfileEntity, (profile) => profile.ads, { nullable: true })
+  profiles: ProfileEntity[];
 }

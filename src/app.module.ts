@@ -9,6 +9,8 @@ import { UserEntity } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { AdModule } from './ad/ad.module';
 import { AdEntity } from './ad/entities/ad.entity';
+import { ProfileModule } from './profile/profile.module';
+import { ProfileEntity } from './profile/entities/profile.entity';
 
 @Module({
   imports: [
@@ -31,12 +33,13 @@ import { AdEntity } from './ad/entities/ad.entity';
       username: 'thanhtran',
       password: 'thanhtran',
       synchronize: true,
-      entities: [UserEntity, AdEntity],
+      entities: [UserEntity, AdEntity, ProfileEntity],
       migrations: ['dist/src/migrations/*.js'],
       migrationsTableName: 'migrations',
     }),
     UserModule,
     AdModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
