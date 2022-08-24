@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import TimestampEntity from 'src/timestamp/timestamp.entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-enum PRIORITY_TYPE {
+export enum PRIORITY_TYPE {
   LINEAR = 'LINEAR',
   EXPONENTIAL = 'EXPONENTIAL',
 }
@@ -23,7 +23,7 @@ export class TaskEntity extends TimestampEntity {
   })
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   @ApiProperty({
     example: 'Clean database tables, except user table',
     description: 'Task description',
@@ -52,4 +52,15 @@ export class TaskEntity extends TimestampEntity {
     name: 'priority_type',
   })
   priorityTtpe: PRIORITY_TYPE;
+
+  @Column({
+    type: 'boolean',
+    default: false,
+    name: 'is_done',
+  })
+  @ApiProperty({
+    example: true,
+    description: 'This property tells if task is done or not',
+  })
+  isDone: boolean;
 }
