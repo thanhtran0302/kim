@@ -7,6 +7,16 @@ export enum PRIORITY_TYPE {
   EXPONENTIAL = 'EXPONENTIAL',
 }
 
+export enum PRIORITY_LEVEL {
+  LOWEST = 'LOWEST',
+  LOW = 'LOW',
+  NORMAL = 'NORMAL',
+  HIGH = 'HIGH',
+  HIGHEST = 'HIGHEST',
+  URGENT = 'URGENT',
+  CRITICAL = 'CRITICAL',
+}
+
 @Entity({ name: 'task' })
 export class TaskEntity extends TimestampEntity {
   @PrimaryGeneratedColumn('uuid')
