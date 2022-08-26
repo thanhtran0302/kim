@@ -1,11 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import TimestampEntity from 'src/timestamp/timestamp.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-export enum PRIORITY_TYPE {
-  LINEAR = 'LINEAR',
-  EXPONENTIAL = 'EXPONENTIAL',
-}
+import TimestampEntity from 'src/commonEntity/global.entity';
+import { Column, Entity } from 'typeorm';
 
 export enum PRIORITY_LEVEL {
   LOWEST = 'LOWEST',
@@ -19,13 +14,6 @@ export enum PRIORITY_LEVEL {
 
 @Entity({ name: 'task' })
 export class TaskEntity extends TimestampEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @ApiProperty({
-    example: 'r324e-v434f-49859f-343il',
-    description: 'Task UUID',
-  })
-  id: string;
-
   @Column()
   @ApiProperty({
     example: 'Should clean database',
@@ -56,21 +44,14 @@ export class TaskEntity extends TimestampEntity {
   dueDate: string;
 
   @Column({
-    type: 'enum',
-    enum: PRIORITY_TYPE,
-    default: PRIORITY_TYPE.EXPONENTIAL,
-    name: 'priority_type',
-  })
-  priorityTtpe: PRIORITY_TYPE;
-
-  @Column({
-    type: 'boolean',
-    default: false,
+    type: 'timestamp',
     name: 'is_done',
+    nullable: true,
   })
   @ApiProperty({
     example: true,
-    description: 'This property tells if task is done or not',
+    nullable: true,
+    description: '2022-08-26T08:45:42.179Z',
   })
   isDone: boolean;
 }

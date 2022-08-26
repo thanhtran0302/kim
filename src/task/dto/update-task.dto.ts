@@ -8,6 +8,7 @@ export class UpdateTaskDto extends PartialType(CreateTaskDto) {
   @ApiProperty({
     required: false,
     default: false,
+    example: '2022-08-26T08:45:42.179Z',
   })
-  isDone: boolean;
+  isDone: string;
 }
