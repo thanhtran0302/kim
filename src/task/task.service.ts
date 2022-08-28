@@ -17,18 +17,9 @@ export class TaskService {
   }
 
   async findAll() {
-    const tasks = await this._taskRepository.find();
+    const tasks: TaskEntity[] = await this._taskRepository.find();
 
-    return tasks.map(
-      ({ title, description, createdAt, updatedAt, dueDate, id }) => ({
-        id,
-        title,
-        description,
-        createdAt,
-        updatedAt,
-        dueDate,
-      }),
-    );
+    return tasks;
   }
 
   findOne(id: string) {

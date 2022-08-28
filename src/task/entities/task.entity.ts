@@ -28,20 +28,36 @@ export class TaskEntity extends TimestampEntity {
   })
   description: string;
 
-  @Column({ name: 'priority_point' })
-  @ApiProperty({
-    example: 1,
-    description:
-      'Task priority point. Point is use as multiplier with priotyType, and dueDate',
+  @Column({
+    name: 'priority',
+    type: 'enum',
+    enum: PRIORITY_LEVEL,
+    default: PRIORITY_LEVEL.NORMAL,
   })
-  priorityPoint: number;
+  @ApiProperty({
+    example: PRIORITY_LEVEL.NORMAL,
+    default: PRIORITY_LEVEL.NORMAL,
+    description: 'Task priority',
+  })
+  priority: number;
 
-  @Column({ name: 'due_date', type: 'timestamp' })
+  @Column({ name: 'due_date', type: 'timestamp', nullable: true })
   @ApiProperty({
     example: '10/10/2022',
     description: "Due date, it's important for algorithm",
   })
   dueDate: string;
+
+  @Column({
+    type: 'time',
+    nullable: true,
+    name: 'time_spent_estimate',
+  })
+  @ApiProperty({
+    example: '4:40',
+    description: 'Estimate time to spend on this task',
+  })
+  timeSpentEstimate: Date;
 
   @Column({
     type: 'timestamp',

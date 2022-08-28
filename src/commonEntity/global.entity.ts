@@ -15,23 +15,23 @@ export default class TimestampEntity {
   id: string;
 
   @CreateDateColumn({
-    type: 'timestamp',
+    type: 'timestamptz',
     name: 'created_at',
     default: new Date(),
   })
-  createdAt: string;
+  createdAt: Date;
 
   @UpdateDateColumn({
-    type: 'timestamp',
+    type: 'timestamptz',
     name: 'updated_at',
     default: new Date(),
   })
-  updatedAt: string;
+  updatedAt: Date;
 
   @DeleteDateColumn({
-    type: 'timestamp',
+    type: 'timestamptz',
     name: 'deleted_at',
     nullable: true,
   })
-  deletedAt?: string;
+  deletedAt?: Date;
 }
