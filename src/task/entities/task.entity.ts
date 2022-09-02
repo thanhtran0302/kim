@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import TimestampEntity from 'src/commonEntity/global.entity';
+import GlobalEntity from 'src/commonEntity/global.entity';
 import { Column, Entity } from 'typeorm';
 
 export enum PRIORITY_LEVEL {
@@ -13,7 +13,7 @@ export enum PRIORITY_LEVEL {
 }
 
 @Entity({ name: 'task' })
-export class TaskEntity extends TimestampEntity {
+export class TaskEntity extends GlobalEntity {
   @Column()
   @ApiProperty({
     example: 'Should clean database',
@@ -25,6 +25,7 @@ export class TaskEntity extends TimestampEntity {
   @ApiProperty({
     example: 'Clean database tables, except user table',
     description: 'Task description',
+    required: false,
   })
   description: string;
 
@@ -41,12 +42,13 @@ export class TaskEntity extends TimestampEntity {
   })
   priority: number;
 
-  @Column({ name: 'due_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'due_date', type: 'timestamptz', nullable: true })
   @ApiProperty({
     example: '10/10/2022',
     description: "Due date, it's important for algorithm",
+    required: false,
   })
-  dueDate: string;
+  dueDate: Date;
 
   @Column({
     type: 'time',
@@ -56,11 +58,12 @@ export class TaskEntity extends TimestampEntity {
   @ApiProperty({
     example: '4:40',
     description: 'Estimate time to spend on this task',
+    required: false,
   })
   timeSpentEstimate: Date;
 
   @Column({
-    type: 'timestamp',
+    type: 'timestamptz',
     name: 'is_done',
     nullable: true,
   })
@@ -68,6 +71,7 @@ export class TaskEntity extends TimestampEntity {
     example: true,
     nullable: true,
     description: '2022-08-26T08:45:42.179Z',
+    required: false,
   })
-  isDone: boolean;
+  isDone: Date;
 }

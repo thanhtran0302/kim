@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export default class TimestampEntity {
+export default class GlobalEntity {
   @PrimaryGeneratedColumn('uuid')
   @ApiProperty({
     example: 'r324e-v434f-49859f-343il',

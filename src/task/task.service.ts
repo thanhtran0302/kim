@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './entities/task.entity';
+import RankTasks from './task.utils';
 
 @Injectable()
 export class TaskService {
@@ -17,9 +18,13 @@ export class TaskService {
   }
 
   async findAll() {
-    const tasks: TaskEntity[] = await this._taskRepository.find();
+    const [tasks]: [TaskEntity[], number] =
+      await this._taskRepository.findAndCount({
+        take: 30,
+        skip: 0,
+      });
 
-    return tasks;
+    return new RankTasks(tasks).rank();
   }
 
   findOne(id: string) {

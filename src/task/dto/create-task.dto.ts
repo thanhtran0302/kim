@@ -16,8 +16,8 @@ export class CreateTaskDto {
   priority: number;
 
   @IsOptional()
-  @ApiProperty({ default: new Date().toISOString(), required: false })
-  dueDate: string;
+  @ApiProperty({ default: new Date(), required: false })
+  dueDate: Date;
 
   @IsOptional()
   @ApiProperty({ default: '3:40', required: false })
