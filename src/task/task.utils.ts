@@ -1,6 +1,6 @@
 import { TaskEntity } from './entities/task.entity';
 import dayjs from 'dayjs';
-import { sortBy, orderBy } from 'lodash';
+import { orderBy } from 'lodash';
 
 dayjs().format();
 

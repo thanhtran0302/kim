@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import GlobalEntity from 'src/commonEntity/global.entity';
+import GlobalEntity from '../../commonEntity/global.entity';
 import { Column, Entity } from 'typeorm';
 
 export enum PRIORITY_LEVEL {
@@ -40,7 +40,7 @@ export class TaskEntity extends GlobalEntity {
     default: PRIORITY_LEVEL.NORMAL,
     description: 'Task priority',
   })
-  priority: number;
+  priority: PRIORITY_LEVEL;
 
   @Column({ name: 'due_date', type: 'timestamptz', nullable: true })
   @ApiProperty({

@@ -13,7 +13,7 @@ export class CreateTaskDto {
     message: 'PRIORITY_REQUIRED',
   })
   @ApiProperty({ default: PRIORITY_LEVEL.NORMAL })
-  priority: number;
+  priority: PRIORITY_LEVEL;
 
   @IsOptional()
   @ApiProperty({ default: new Date(), required: false })
