@@ -20,8 +20,9 @@ export class TaskService {
   async findAll() {
     const [tasks]: [TaskEntity[], number] =
       await this._taskRepository.findAndCount({
-        take: 30,
-        skip: 0,
+        where: {
+          isDone: null,
+        },
       });
 
     return new RankTasks(tasks).rank();
