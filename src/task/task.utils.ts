@@ -1,4 +1,4 @@
-import { TaskEntity } from './entities/task.entity';
+import { PRIORITY_LEVEL, TaskEntity } from './entities/task.entity';
 import dayjs from 'dayjs';
 import { orderBy } from 'lodash';
 
@@ -23,7 +23,9 @@ class RankTasks {
       this._tasks.map((task: TaskEntity) => {
         return {
           ...task,
-          score: this._scoreDueDateOrCreatedAt(task.createdAt, task.dueDate),
+          score:
+            this._scoreDueDateOrCreatedAt(task.createdAt, task.dueDate) +
+            this._scorePriority(task.priority),
         };
       }),
       ['score'],
@@ -31,6 +33,27 @@ class RankTasks {
     );
 
     return tasks;
+  }
+
+  private _scorePriority(priority: PRIORITY_LEVEL) {
+    switch (priority) {
+      case PRIORITY_LEVEL.LOWEST:
+        return -1;
+      case PRIORITY_LEVEL.LOW:
+        return 0;
+      case PRIORITY_LEVEL.NORMAL:
+        return 1;
+      case PRIORITY_LEVEL.HIGH:
+        return 2;
+      case PRIORITY_LEVEL.HIGHEST:
+        return 3;
+      case PRIORITY_LEVEL.URGENT:
+        return 4;
+      case PRIORITY_LEVEL.CRITICAL:
+        return 5;
+      default:
+        return 1;
+    }
   }
 
   private _scoreDueDateOrCreatedAt(createdAt: Date, dueDate: Date): number {
