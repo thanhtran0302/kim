@@ -13,29 +13,38 @@ class RankTasks {
   private static DAYS_SCORE = 11;
   private static DUEDATE_EXPONENT = 1.3;
   private static CREATEDAT_EXPONENT = 1.2;
+  private static TIME_SPENT_ESTIMATE_EXPONENT = 1.1;
+  private static HOUR_AS_MINUTES = 60;
 
   constructor(tasks: TaskRaking[]) {
     this._tasks = tasks;
   }
 
   public rank(): TaskRaking[] {
-    const tasks = orderBy(
-      this._tasks.map((task: TaskEntity) => {
-        return {
-          ...task,
-          score:
-            this._scoreDueDateOrCreatedAt(task.createdAt, task.dueDate) +
-            this._scorePriority(task.priority),
-        };
-      }),
+    return orderBy(
+      this._tasks.map((task: TaskEntity) => ({
+        ...task,
+        score:
+          this._scoreDueDateOrCreatedAt(task.createdAt, task.dueDate) +
+          this._scorePriority(task.priority) +
+          this._scoreTimeSpentEstimate(task.timeSpentEstimate),
+      })),
       ['score'],
       ['desc'],
     );
-
-    return tasks;
   }
 
-  private _scorePriority(priority: PRIORITY_LEVEL) {
+  private _scoreTimeSpentEstimate(timeSpendEstimate: Date): number {
+    if (timeSpendEstimate) {
+      const [hour, minutes] = timeSpendEstimate.toString().split(':');
+      const a = Number(hour) * RankTasks.HOUR_AS_MINUTES + Number(minutes);
+
+      return Math.ceil((a / 30) ** RankTasks.TIME_SPENT_ESTIMATE_EXPONENT);
+    }
+    return 0;
+  }
+
+  private _scorePriority(priority: PRIORITY_LEVEL): number {
     switch (priority) {
       case PRIORITY_LEVEL.LOWEST:
         return -1;
@@ -68,6 +77,7 @@ class RankTasks {
           (RankTasks.DAYS_SCORE - diffDay) ** RankTasks.DUEDATE_EXPONENT,
         );
       }
+      score += 1;
     }
 
     score += Math.ceil(
