@@ -4,23 +4,23 @@ import { orderBy } from 'lodash';
 
 dayjs().format();
 
-export interface TaskRaking extends TaskEntity {
+export interface TaskRanking extends TaskEntity {
   score?: number;
 }
 
 class RankTasks {
-  private _tasks: TaskRaking[] = [];
+  private _tasks: TaskRanking[] = [];
   private static DAYS_SCORE = 11;
   private static DUEDATE_EXPONENT = 1.3;
   private static CREATEDAT_EXPONENT = 1.2;
   private static TIME_SPENT_ESTIMATE_EXPONENT = 1.1;
   private static HOUR_AS_MINUTES = 60;
 
-  constructor(tasks: TaskRaking[]) {
+  constructor(tasks: TaskRanking[]) {
     this._tasks = tasks;
   }
 
-  public rank(): TaskRaking[] {
+  public rank(): TaskRanking[] {
     return orderBy(
       this._tasks.map((task: TaskEntity) => ({
         ...task,
@@ -31,7 +31,7 @@ class RankTasks {
       })),
       ['score'],
       ['desc'],
-    );
+    ).splice(0, 3);
   }
 
   private _scoreTimeSpentEstimate(timeSpendEstimate: Date): number {
@@ -74,7 +74,8 @@ class RankTasks {
 
       if (diffDay >= 0 && diffDay <= 10) {
         score += Math.ceil(
-          (RankTasks.DAYS_SCORE - diffDay) ** RankTasks.DUEDATE_EXPONENT,
+          Math.abs(RankTasks.DAYS_SCORE - diffDay) **
+            RankTasks.DUEDATE_EXPONENT,
         );
       }
       score += 1;

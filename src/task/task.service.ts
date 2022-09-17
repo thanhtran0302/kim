@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, IsNull, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './entities/task.entity';
-import RankTasks from './task.utils';
+import RankTasks, { TaskRanking } from './task.utils';
 
 @Injectable()
 export class TaskService {
@@ -18,14 +18,21 @@ export class TaskService {
   }
 
   async findAll() {
-    const [tasks]: [TaskEntity[], number] =
-      await this._taskRepository.findAndCount({
-        where: {
-          isDone: null,
-        },
-      });
+    return this._taskRepository.find();
+  }
 
-    return new RankTasks(tasks).rank();
+  async focus() {
+    const tasks = await this._taskRepository.find({
+      where: [
+        { isDone: IsNull() },
+        { isDone: Between(new Date(), new Date(2200, 1, 1)) },
+      ],
+    });
+    const rankedTasks: TaskRanking[] = new RankTasks(tasks)
+      .rank()
+      .map(({ score, ...rest }: TaskRanking) => ({ ...rest }));
+
+    return rankedTasks;
   }
 
   findOne(id: string) {

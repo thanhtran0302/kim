@@ -32,6 +32,7 @@ export default class GlobalEntity {
     type: 'timestamptz',
     name: 'deleted_at',
     nullable: true,
+    select: false,
   })
   deletedAt?: Date;
 }

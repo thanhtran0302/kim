@@ -29,6 +29,12 @@ export class TaskController {
     return this.taskService.findAll();
   }
 
+  @Get('/focus')
+  @ApiOperation({ summary: 'Get 3 focus for the day' })
+  focus() {
+    return this.taskService.focus();
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Find one task by id' })
   findOne(@Param('id') id: string) {

@@ -3,7 +3,9 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 import { PRIORITY_LEVEL } from '../entities/task.entity';
 
 export class CreateTaskDto {
-  @IsNotEmpty()
+  @IsNotEmpty({
+    message: 'TITLE_REQUIRED',
+  })
   @ApiProperty({
     default: 'Work out',
   })
