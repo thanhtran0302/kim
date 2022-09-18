@@ -41,6 +41,12 @@ export class TaskController {
     return this.taskService.findOne(id);
   }
 
+  @Patch('/done/:id')
+  @ApiOperation({ summary: 'Toggle task if this one is done or not.' })
+  async toggleIsDone(@Param('id') id: string) {
+    return this.taskService.toggleIsDone(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
     return this.taskService.update(id, updateTaskDto);

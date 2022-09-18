@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, IsNull, Repository } from 'typeorm';
+import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './entities/task.entity';
@@ -25,7 +25,7 @@ export class TaskService {
     const tasks = await this._taskRepository.find({
       where: [
         { isDone: IsNull() },
-        { isDone: Between(new Date(), new Date(2200, 1, 1)) },
+        { isDone: MoreThanOrEqual(new Date().toISOString().split('T')[0]) },
       ],
     });
     const rankedTasks: TaskRanking[] = new RankTasks(tasks)
@@ -33,6 +33,22 @@ export class TaskService {
       .map(({ score, ...rest }: TaskRanking) => ({ ...rest }));
 
     return rankedTasks;
+  }
+
+  async toggleIsDone(id: string) {
+    const isTaskDone: Date | null = (await this._taskRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        isDone: true,
+      },
+    })) as unknown as Date | null;
+
+    return this._taskRepository.update(
+      { id },
+      { isDone: isTaskDone ? null : new Date() },
+    );
   }
 
   findOne(id: string) {
