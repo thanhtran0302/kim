@@ -10,7 +10,7 @@ import {
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('task')
 @Controller('task')
@@ -19,6 +19,7 @@ export class TaskController {
 
   @Post()
   @ApiOperation({ summary: 'Create task' })
+  @ApiBody({ type: CreateTaskDto })
   create(@Body() createTaskDto: CreateTaskDto) {
     return this.taskService.create(createTaskDto);
   }
@@ -48,6 +49,8 @@ export class TaskController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Partially update information for task' })
+  @ApiBody({ type: UpdateTaskDto })
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
     return this.taskService.update(id, updateTaskDto);
   }
