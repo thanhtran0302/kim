@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { PRIORITY_LEVEL } from '../entities/task.entity';
 
 export class CreateTaskDto {
   @IsNotEmpty({
@@ -10,12 +9,6 @@ export class CreateTaskDto {
     default: 'Work out',
   })
   title: string;
-
-  @IsNotEmpty({
-    message: 'PRIORITY_REQUIRED',
-  })
-  @ApiProperty({ default: PRIORITY_LEVEL.NORMAL })
-  priority: PRIORITY_LEVEL;
 
   @IsOptional()
   @ApiProperty({ default: new Date(), required: false })
@@ -28,4 +21,12 @@ export class CreateTaskDto {
   @IsOptional()
   @ApiProperty({ required: false, default: 'Today work out is arms' })
   description: string;
+
+  @IsOptional()
+  @ApiProperty({ required: false, default: false })
+  isUrgent: boolean;
+
+  @IsOptional()
+  @ApiProperty({ required: false, default: false })
+  isImportant: boolean;
 }

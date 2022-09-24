@@ -11,6 +11,7 @@ import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { isWeekend } from 'date-fns';
 
 @ApiTags('task')
 @Controller('task')
@@ -33,7 +34,21 @@ export class TaskController {
   @Get('/focus')
   @ApiOperation({ summary: 'Get 3 focus for the day' })
   focus() {
+    if (isWeekend(new Date())) {
+      return [];
+    }
+
     return this.taskService.focus();
+  }
+
+  @Get('/backlog')
+  @ApiOperation({ summary: 'Get tasks in backlog' })
+  backlog() {
+    if (isWeekend(new Date())) {
+      return [];
+    }
+
+    return this.taskService.backlog();
   }
 
   @Get(':id')
