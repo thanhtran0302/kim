@@ -39,7 +39,7 @@ class RankTasks {
   ): number {
     let score = isUrgent ? 5 : 0;
 
-    return 0;
+    return score;
   }
 
   private _scoreTimeSpentEstimate(timeSpendEstimate: Date): number {
