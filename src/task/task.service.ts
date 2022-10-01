@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
+import { IsNull, LessThan, MoreThanOrEqual, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './entities/task.entity';
 import RankTasks, { TaskRanking } from './task.utils';
+
+interface BacklogTasks {
+  backlog: TaskEntity[];
+  done: TaskEntity[];
+}
 
 @Injectable()
 export class TaskService {
@@ -13,21 +18,16 @@ export class TaskService {
     private _taskRepository: Repository<TaskEntity>,
   ) {}
 
-  create(createTaskDto: CreateTaskDto) {
+  public create(createTaskDto: CreateTaskDto) {
     return this._taskRepository.save<CreateTaskDto>(createTaskDto);
   }
 
-  async findAll() {
+  public async findAll() {
     return this._taskRepository.find();
   }
 
-  async focus() {
-    const tasks = await this._taskRepository.find({
-      where: [
-        { isDone: IsNull() },
-        { isDone: MoreThanOrEqual(new Date().toISOString().split('T')[0]) },
-      ],
-    });
+  public async focus() {
+    const tasks = await this._getTasks();
     const rankedTasks: TaskRanking[] = new RankTasks(tasks)
       .rank()
       .map(({ score, ...rest }: TaskRanking) => ({ ...rest }));
@@ -35,7 +35,21 @@ export class TaskService {
     return rankedTasks;
   }
 
-  async toggleIsDone(id: string) {
+  public async backlog() {
+    return (await this._getTasks(true)).reduce(
+      (previousValue: BacklogTasks, currentValue: TaskEntity) => ({
+        backlog: !currentValue.isDone
+          ? [...previousValue.backlog, currentValue]
+          : previousValue.backlog,
+        done: currentValue.isDone
+          ? [...previousValue.done, currentValue]
+          : previousValue.done,
+      }),
+      { backlog: [], done: [] },
+    );
+  }
+
+  public async toggleIsDone(id: string) {
     const isTaskDone: Date | null = (await this._taskRepository.findOne({
       where: {
         id,
@@ -51,15 +65,24 @@ export class TaskService {
     );
   }
 
-  findOne(id: string) {
+  public findOne(id: string) {
     return this._taskRepository.findOne({ where: { id } });
   }
 
-  update(id: string, updateTaskDto: UpdateTaskDto) {
+  public update(id: string, updateTaskDto: UpdateTaskDto) {
     return `This action updates a #${id} task`;
   }
 
-  remove(id: string) {
+  public remove(id: string) {
     return this._taskRepository.softDelete(id);
+  }
+
+  private _getTasks(isBacklog = false) {
+    const date = new Date().toISOString().split('T')[0];
+    const listToRetreive = isBacklog ? LessThan(date) : MoreThanOrEqual(date);
+
+    return this._taskRepository.find({
+      where: [{ isDone: IsNull() }, { isDone: listToRetreive }],
+    });
   }
 }

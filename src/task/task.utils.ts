@@ -1,8 +1,6 @@
-import { PRIORITY_LEVEL, TaskEntity } from './entities/task.entity';
-import dayjs from 'dayjs';
+import { TaskEntity } from './entities/task.entity';
+import { differenceInBusinessDays } from 'date-fns';
 import { orderBy } from 'lodash';
-
-dayjs().format();
 
 export interface TaskRanking extends TaskEntity {
   score?: number;
@@ -15,6 +13,7 @@ class RankTasks {
   private static CREATEDAT_EXPONENT = 1.2;
   private static TIME_SPENT_ESTIMATE_EXPONENT = 1.1;
   private static HOUR_AS_MINUTES = 60;
+  private static URGENCY_DAY = 5;
 
   constructor(tasks: TaskRanking[]) {
     this._tasks = tasks;
@@ -26,12 +25,21 @@ class RankTasks {
         ...task,
         score:
           this._scoreDueDateOrCreatedAt(task.createdAt, task.dueDate) +
-          this._scorePriority(task.priority) +
           this._scoreTimeSpentEstimate(task.timeSpentEstimate),
       })),
       ['score'],
       ['desc'],
     ).splice(0, 3);
+  }
+
+  private _scoreUrgency(
+    createdAt: Date,
+    dueDate: Date,
+    isUrgent: boolean,
+  ): number {
+    let score = isUrgent ? 5 : 0;
+
+    return score;
   }
 
   private _scoreTimeSpentEstimate(timeSpendEstimate: Date): number {
@@ -44,33 +52,12 @@ class RankTasks {
     return 0;
   }
 
-  private _scorePriority(priority: PRIORITY_LEVEL): number {
-    switch (priority) {
-      case PRIORITY_LEVEL.LOWEST:
-        return -1;
-      case PRIORITY_LEVEL.LOW:
-        return 0;
-      case PRIORITY_LEVEL.NORMAL:
-        return 1;
-      case PRIORITY_LEVEL.HIGH:
-        return 2;
-      case PRIORITY_LEVEL.HIGHEST:
-        return 3;
-      case PRIORITY_LEVEL.URGENT:
-        return 4;
-      case PRIORITY_LEVEL.CRITICAL:
-        return 5;
-      default:
-        return 1;
-    }
-  }
-
   private _scoreDueDateOrCreatedAt(createdAt: Date, dueDate: Date): number {
     let score = 0;
     const today = new Date();
 
     if (dueDate) {
-      const diffDay: number = dayjs(dueDate).diff(today, 'days', false);
+      const diffDay: number = differenceInBusinessDays(dueDate, today);
 
       if (diffDay >= 0 && diffDay <= 10) {
         score += Math.ceil(
@@ -82,7 +69,7 @@ class RankTasks {
     }
 
     score += Math.ceil(
-      dayjs(today).diff(createdAt, 'days', false) **
+      differenceInBusinessDays(today, createdAt) **
         RankTasks.CREATEDAT_EXPONENT,
     );
 

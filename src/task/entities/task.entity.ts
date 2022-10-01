@@ -2,16 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import GlobalEntity from '../../commonEntity/global.entity';
 import { Column, Entity } from 'typeorm';
 
-export enum PRIORITY_LEVEL {
-  LOWEST = 'LOWEST',
-  LOW = 'LOW',
-  NORMAL = 'NORMAL',
-  HIGH = 'HIGH',
-  HIGHEST = 'HIGHEST',
-  URGENT = 'URGENT',
-  CRITICAL = 'CRITICAL',
-}
-
 @Entity({ name: 'task' })
 export class TaskEntity extends GlobalEntity {
   @Column()
@@ -30,17 +20,30 @@ export class TaskEntity extends GlobalEntity {
   description: string;
 
   @Column({
-    name: 'priority',
-    type: 'enum',
-    enum: PRIORITY_LEVEL,
-    default: PRIORITY_LEVEL.NORMAL,
+    name: 'is_urgent',
+    type: 'boolean',
+    nullable: true,
+    default: false,
   })
   @ApiProperty({
-    example: PRIORITY_LEVEL.NORMAL,
-    default: PRIORITY_LEVEL.NORMAL,
-    description: 'Task priority',
+    required: false,
+    example: false,
+    description: 'Indicate whether if task is urgent or not',
   })
-  priority: PRIORITY_LEVEL;
+  isUrgent: boolean;
+
+  @Column({
+    name: 'is_important',
+    type: 'boolean',
+    nullable: true,
+    default: false,
+  })
+  @ApiProperty({
+    required: false,
+    example: false,
+    description: 'Indicate whether if task is important or not',
+  })
+  isImportant: boolean;
 
   @Column({ name: 'due_date', type: 'timestamptz', nullable: true })
   @ApiProperty({
